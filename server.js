@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 
 const PORT = 3000;
 
@@ -17,6 +18,15 @@ const io = new Server(server, {
     origin: "*",
   },
 });
+
+// Fix __dirname for ES modules
+app.use(express.static(path.join(__dirname, "dist")));
+
+
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
 
 app.set("io", io);
 
