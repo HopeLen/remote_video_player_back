@@ -22,11 +22,9 @@ const io = new Server(server, {
 // Fix __dirname for ES modules
 app.use(express.static(path.join(__dirname, "dist")));
 
-
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
-
 
 app.set("io", io);
 
@@ -109,5 +107,11 @@ io.on("connection", (socket) => {
     );
 
     io.to(data.roomId).emit("room:pause");
+  });
+  socket.on("client:looped", (data) => {
+    console.log(
+      `User ${socket.id} set the loop of the video to ${data.looped} of the room ${data.roomId}`,
+    );
+    io.to(data.roomId).emit("server:looped", data.looped);
   });
 });
