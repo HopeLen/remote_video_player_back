@@ -108,10 +108,4 @@ io.on("connection", (socket) => {
 
     io.to(data.roomId).emit("room:pause");
   });
-  socket.on("client:looped", (data) => {
-    console.log(
-      `User ${socket.id} set the loop of the video to ${data.looped} of the room ${data.roomId}`,
-    );
-    io.to(data.roomId).emit("server:looped", data.looped);
-  });
 });
